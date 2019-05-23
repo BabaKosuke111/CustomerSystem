@@ -22,10 +22,11 @@
 				<div class="card" style="width: 30rem;">
 					<div class="card-body">
 					<form action="UserDelete" method="post">
-						<h5 class="card-title">馬場幸介を削除してよろしいですか？</h5>
+						<h5 class="card-title">${customer.customerName}を削除してよろしいですか？</h5>
 						<br>
-						<button type="submit" class="btn btn-danger" name="confirm_button" value="">削除する</button>
-						<button type="submit" class="btn btn-primary" name="confirm_button" value="">やめる</button>
+						<input type="hidden" name="customerId" value="${customer.customerId}">
+						<button type="submit" class="btn btn-danger" name="confirm_button" value="delete">削除する</button>
+						<button type="submit" class="btn btn-primary" name="confirm_button" value="cancel">戻る</button>
 					</form>
 					</div>
 				</div>

@@ -9,7 +9,7 @@
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
 	integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
 	crossorigin="anonymous">
-<title>顧客情報編集</title>
+<title>顧客情報更新</title>
 </head>
 <body>
 	<jsp:include page="/baselayout/navbar.jsp" />
@@ -23,25 +23,22 @@
 						<h5 class="card-title">顧客情報更新</h5>
 						<form action="UserUpdate" method="post">
 						<div class="form-group">
-							<label for="exampleInputEmail1">名前</label> <input type="text"
-								class="form-control" id="exampleInputEmail1"
-								aria-describedby="emailHelp" placeholder="馬場 幸介">
+							<label for="InputCustomerName">顧客名</label>
+							<input type="text" class="form-control" name ="customerName" value="${customer.customerName}">
 						</div>
 						<div class="form-group">
-							<label for="exampleInputEmail1">名前かな</label> <input type="text"
-								class="form-control" id="exampleInputEmail1"
-								aria-describedby="emailHelp" placeholder="ばば こうすけ">
+							<label for="inputCustomerNameKana">顧客名かな</label>
+							<input type="text" class="form-control" name="customerNameKana" value="${customer.customerNameKana}">
 						</div>
 						<div class="form-group">
-							<label for="exampleInputEmail1">郵便番号</label> <input type="text"
-								class="form-control" id="exampleInputEmail1"
-								aria-describedby="emailHelp" placeholder="185-0035">
+							<label for="inputPostalCode">郵便番号</label>
+							<input type="text" class="form-control" name="postalCode" value="${customer.postalCode}">
 						</div>
 						<div class="form-group">
-							<label for="exampleInputEmail1">住所</label> <input type="text"
-								class="form-control" id="exampleInputEmail1"
-								aria-describedby="emailHelp" placeholder="東京都国分寺市">
+							<label for="inputAddress">住所</label>
+							<input type="text" class="form-control" name="address" value="${customer.address }">
 						</div>
+						<input type="hidden" name="customerId" value="${customer.customerId}">
 						<button type="submit" class="btn btn-primary">更新</button>
 						</form>
 					</div>

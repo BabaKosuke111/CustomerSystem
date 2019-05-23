@@ -24,16 +24,14 @@
 			</tr>
 		</thead>
 		<tbody>
-			<tr>
-				<td>馬場 幸介</td>
-				<td><a class="btn btn-primary" href="UserUpdate" role="button">編集</a></td>
-				<td><a class="btn btn-primary" href="UserDelete" role="button">削除</a></td>
-			</tr>
-			<tr>
-				<td>美野輪 剛大</td>
-				<td><a class="btn btn-primary" href="#" role="button">編集</a></td>
-				<td><a class="btn btn-primary" href="#" role="button">削除</a></td>
-			</tr>
+			<c:forEach var="customer" items="${customerList}">
+				<tr>
+					<td>${customer.customerName}</td>
+					<td><a class="btn btn-primary"
+						href="UserUpdate?customerId=${customer.customerId}" role="button">編集</a></td>
+					<td><a class="btn btn-primary" href="UserDelete?customerId=${customer.customerId}" role="button">削除</a></td>
+				</tr>
+			</c:forEach>
 		</tbody>
 	</table>
 </body>

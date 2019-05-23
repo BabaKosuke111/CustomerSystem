@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import base.ConnectionManager;
+import beans.User;
 
 public class UserDAO {
 
@@ -20,14 +21,11 @@ public class UserDAO {
 	 * @throws SQLException
 	 *             呼び出し元にスロー
 	 */
-	public boolean getLogin(String userId,String password)  {
-		String userdata=null;
-		String passdata=null;
-		//ログイン判定
-		boolean loginFlag=false;
+	public User getLogin(String userId,String password)  {
 
-		String sql="SELECT user_id, password FROM  customer_info_db.m_user WHERE user_id=? AND password = ?";
+		String sql="SELECT * FROM  customer_info_db.m_user WHERE user_id=? AND password = ?";
 
+		User user=new User();
 		Connection con=null;
 		try{
 			con = ConnectionManager.getConnection();
@@ -37,26 +35,30 @@ public class UserDAO {
 			pstmt.setString(2, password);
 
 			ResultSet rs = pstmt.executeQuery();
-			if(rs.next()) {
-			userdata=rs.getString("user_id");
-			passdata=rs.getString("password");
+			if(!rs.next()) {
 			}
+
+			String userIdData=rs.getString("user_id");
+			String userNameData=rs.getString("user_name");
+			String passwordData=rs.getString("password");
 			//ユーザIDとパスワード正しい場合loginFlag=trueを代入
-			if(userId.equals(userdata)==true&&password.equals(passdata)==true) {
-				loginFlag=true;
+			if(userId.equals(userIdData)==true&&password.equals(passwordData)==true) {
+				user.setUserId(userIdData);
+				user.setUserName(userNameData);
+				user.setPassword(passwordData);
 			}
-			return loginFlag;
+			return user;
 
         } catch (SQLException e) {
             e.printStackTrace();
-            return loginFlag;
+            return null;
         } finally {
             if (con != null) {
                 try {
                     con.close();
                 } catch (SQLException e) {
                     e.printStackTrace();
-                    return loginFlag;
+                    return null;
                 }
             }
         }

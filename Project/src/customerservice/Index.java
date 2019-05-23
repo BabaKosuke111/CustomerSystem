@@ -50,17 +50,14 @@ public class Index extends HttpServlet {
 			String userId=request.getParameter("userId");
 			String password=request.getParameter("password");
 
-			User user=new User();
-			user.setUserId(userId);
-			user.setPassword(password);
 
 			UserDAO userdao=new UserDAO();
 
-			boolean loginFlag=userdao.getLogin(userId, password);
+			User user=userdao.getLogin(userId, password);
 
-			if(loginFlag) {
+			if(!(user==null)) {
 
-//				session.setAttribute("userInfo",user);
+				session.setAttribute("user",user);
 
 				response.sendRedirect("UserList");
 

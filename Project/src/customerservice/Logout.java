@@ -32,6 +32,7 @@ public class Logout extends HttpServlet {
 		// TODO Auto-generated method stub
 		HttpSession session = request.getSession();
 
+		session.removeAttribute("userInfo");
 		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/logout.jsp");
 		dispatcher.forward(request, response);
 	}

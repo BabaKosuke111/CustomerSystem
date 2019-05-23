@@ -9,6 +9,7 @@
 <nav class="navbar navbar-light bg-light">
 	<a class="nav-link" href="UserList">顧客情報管理システム</a>
 	<div class="my-2 my-md-0 mr-md-3">
+		<span class="navbar-brand mb-0 h1">${user.userName}さん</span>
 		<a class="btn btn-primary" href="UserSupportList" role="button">お問い合わせ一覧</a>
 		<a class="btn btn-primary" href="UserSupport" role="button">お問い合わせフォーム</a>
 		<a class="btn btn-primary" href="UserResist" role="button">顧客追加</a>

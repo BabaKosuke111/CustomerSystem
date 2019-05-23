@@ -13,45 +13,66 @@ import beans.Customer;
 
 public class CustomerDAO {
 
-	public Customer showCustomer(int customerId) throws SQLException{
+	public Customer showCustomer(int targetId) throws SQLException{
+
+		Connection con =null;
 
 		String sql="SELECT * FROM customer_info_db.m_customer WHERE customer_id=?";
 
 		Customer customer=new Customer();
 
-		try (Connection con = ConnectionManager.getConnection();
-				PreparedStatement pstmt = con.prepareStatement(sql)) {
+		try  {
 
-			pstmt.setInt(1, customerId);
+			con = ConnectionManager.getConnection();
+			PreparedStatement pstmt = con.prepareStatement(sql);
+
+			pstmt.setInt(1, targetId);
 
 			ResultSet rs=pstmt.executeQuery();
 
 			if(!rs.next()) {
 
 			}
+			int customerId=rs.getInt("customer_id");
 			String customerName=rs.getString("customer_name");
 			String customerNameKana=rs.getString("customer_name_kana");
 			String postalCode=rs.getString("postal_code");
 			String address=rs.getString("address");
 
+			customer.setCustomerId(customerId);
 			customer.setCustomerName(customerName);
 			customer.setCustomerNameKana(customerNameKana);
 			customer.setPostalCode(postalCode);
 			customer.setAddress(address);
 
 			return customer;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		} finally {
+			if (con != null) {
+				try {
+					con.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+					return null;
+				}
+			}
 		}
 	}
 
 	public List<Customer> showAllCustomer() throws SQLException{
 
+		Connection con=null;
+
 		List<Customer> customerList=new ArrayList<>();
 
 		String sql="SELECT * FROM customer_info_db.m_customer";
 
-		try(Connection con=ConnectionManager.getConnection();
-				Statement stmt = con.createStatement()){
+		try{
 
+			con=ConnectionManager.getConnection();
+			Statement stmt = con.createStatement();
 			ResultSet rs=stmt.executeQuery(sql);
 
 			while(rs.next()) {
@@ -60,7 +81,6 @@ public class CustomerDAO {
 				String customerNameKana=rs.getString("customer_name_kana");
 				String postalCode=rs.getString("postal_code");
 				String address=rs.getString("address");
-				String userId=rs.getString("user_id");
 
 				Customer customer=new Customer();
 				customer.setCustomerId(customerId);
@@ -70,10 +90,24 @@ public class CustomerDAO {
 				customer.setAddress(address);
 
 				customerList.add(customer);
-
 			}
+
 			return customerList;
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		} finally {
+			if (con != null) {
+				try {
+					con.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+					return null;
+				}
+			}
 		}
+
 	}
 	public int insertCustomer(Customer customer) throws SQLException{
 
@@ -97,19 +131,19 @@ public class CustomerDAO {
 
 			return count;
 
-		 } catch (SQLException e) {
-	            e.printStackTrace();
-	            return count;
-	        } finally {
-	            if (con != null) {
-	                try {
-	                    con.close();
-	                } catch (SQLException e) {
-	                    e.printStackTrace();
-	                    return count;
-	                }
-	            }
-	        }
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return count;
+		} finally {
+			if (con != null) {
+				try {
+					con.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+					return count;
+				}
+			}
+		}
 	}
 
 	public int deleteCustomer(int customerId) throws SQLException{
@@ -136,57 +170,65 @@ public class CustomerDAO {
 	}
 
 
-	public int updateCustomer(int selectNum,Customer customer) throws SQLException{
+	public int updateCustomer(Customer customer) throws SQLException{
 
-		String sql=switchSql(selectNum);
+		Connection con=null;
+
+		String sql="UPDATE customer_info_db.m_customer "
+				+ "SET customer_name=?,customer_name_kana=?,postal_code=?,address=? "
+				+ "WHERE customer_id=?";
 
 		int count=0;
 
-		try (Connection con=ConnectionManager.getConnection();
-				PreparedStatement pstmt=con.prepareStatement(sql);){
+		try{
+
+			con=ConnectionManager.getConnection();
+			PreparedStatement pstmt=con.prepareStatement(sql);
 
 
-
-			switch(selectNum) {
-			case 1:
-				pstmt.setString(1, customer.getCustomerName());
-				break;
-			case 2:
-				pstmt.setString(1, customer.getCustomerNameKana());
-				break;
-			case 3:
-				pstmt.setString(1, customer.getPostalCode());
-				break;
-			case 4:
-				pstmt.setString(1, customer.getAddress());
-				break;
-			}
-
-			pstmt.setInt(2, customer.getCustomerId());
+			pstmt.setString(1, customer.getCustomerName());
+			pstmt.setString(2, customer.getCustomerNameKana());
+			pstmt.setString(3, customer.getPostalCode());
+			pstmt.setString(4, customer.getAddress());
+			pstmt.setInt(5, customer.getCustomerId());
 
 			count=pstmt.executeUpdate();
 
+
+			return count;
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return count;
+		} finally {
+			if (con != null) {
+				try {
+					con.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+					return count;
+				}
+			}
 		}
-		return count;
 	}
 
-	private static String switchSql(int selectNum) {
-
-		String sql="UPDATE customer_info_db.m_customer ";
-		switch(selectNum) {
-		case 1:
-			sql+="SET customer_name=? WHERE customer_id=?";
-			break;
-		case 2:
-			sql+="SET customer_name_kana=? WHERE customer_id=?";
-			break;
-		case 3:
-			sql+="SET postal_code=? WHERE customer_id=?";
-			break;
-		case 4:
-			sql+="SET address=? WHERE customer_id=?";
-			break;
-		}
-		return sql;
-	}
+//	private static String switchSql(int selectNum) {
+//
+//		String sql="UPDATE customer_info_db.m_customer ";
+//		switch(selectNum) {
+//		case 1:
+//			sql+="SET customer_name=? WHERE customer_id=?";
+//			break;
+//		case 2:
+//			sql+="SET customer_name_kana=? WHERE customer_id=?";
+//			break;
+//		case 3:
+//			sql+="SET postal_code=? WHERE customer_id=?";
+//			break;
+//		case 4:
+//			sql+="SET address=? WHERE customer_id=?";
+//			break;
+//		}
+//		return sql;
+//	}
 }
