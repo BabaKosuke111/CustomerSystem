@@ -15,25 +15,24 @@
 	<jsp:include page="/baselayout/navbar.jsp" />
 	<br>
 	<br>
-	<table class="container table ">
+	<table class="container table text-center">
 		<thead>
 			<tr>
-				<th scope="col">お問い合わせ</th>
+				<th scope="col">問い合わせ部品</th>
+				<th scope="col">顧客名</th>
 				<th scope="col"></th>
-				<th scope="col"></th>
+				<th scope="col"><a class="btn btn-primary" href="UserSupport" role="button">お問い合わせ追加</a></th>
 			</tr>
 		</thead>
 		<tbody>
-			<tr>
-				<td>シャドバが糞ゲーについて</td>
-				<td><a class="btn btn-primary" href="UserSupportAnswer" role="button">回答</a></td>
-				<td><p class="text-primary">回答待ち</p></td>
-			</tr>
-			<tr>
-				<td>いつになったら３階の水道は直るのですか？</td>
-				<td><a class="btn btn-primary" href="" role="button">回答</a></td>
-				<td><p class="text-danger">回答済み</p></td>
-			</tr>
+			<c:forEach var="inquiry" items="${inquiryList}">
+				<tr>
+					<td>${inquiry.itemName}</td>
+					<td>${inquiry.customerName}</td>
+					<td><a class="btn btn-primary" href="UserSupportAnswer?inquiryId=${inquiry.inquiryId}" role="button">回答</a></td>
+					<td><p class="text-primary">${inquiry.statusName}</p></td>
+				</tr>
+			</c:forEach>
 		</tbody>
 	</table>
 </body>

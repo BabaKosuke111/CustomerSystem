@@ -24,16 +24,6 @@
 					<div class="card-body">
 						<h4 class="card-title">お問い合わせ</h4>
 						<h5 class="card-title">登録しました</h5>
-						<br>
-						<div class="form-group">
-							<label for="formGroupExampleInput">題名</label>
-							<input type="text" class="form-control" id="formGroupExampleInput" placeholder="題名" readonly>
-						</div>
-						<div class="form-group">
-							<label for="exampleFormControlTextarea1">内容</label>
-							<textarea class="form-control" id="exampleFormControlTextarea1" rows="5" readonly></textarea>
-						</div>
-						<br>
 						<a class="btn btn-primary" href="UserList" role="button">ユーザリストへ</a>
 					</div>
 				</div>

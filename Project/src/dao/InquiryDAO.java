@@ -15,6 +15,9 @@ public class InquiryDAO {
 
 	public List<Inquiry> showAllInquiry() throws SQLException{
 
+
+		Connection con=null;
+
 		List<Inquiry> inquiryList=new ArrayList<>();
 
 		String sql="SELECT ti.inquiry_id, i.item_name, "
@@ -27,10 +30,12 @@ public class InquiryDAO {
 				+ "LEFT OUTER JOIN customer_info_db.m_customer c "
 				+ "ON ti.customer_id=c.customer_id";
 
-		try(Connection con=ConnectionManager.getConnection();
-				Statement stmt = con.createStatement()){
+		try {
 
+			con=ConnectionManager.getConnection();
+			Statement stmt = con.createStatement();
 			ResultSet rs=stmt.executeQuery(sql);
+
 
 			while(rs.next()) {
 				int inquiryId=rs.getInt("inquiry_id");
@@ -48,8 +53,22 @@ public class InquiryDAO {
 
 				inquiryList.add(inquiry);
 			}
+			return inquiryList;
+
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		} finally {
+			if (con != null) {
+				try {
+					con.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+					return null;
+				}
+			}
 		}
-		return inquiryList;
 	}
 
 	public int insertInquiry(Inquiry inquiry) throws SQLException{

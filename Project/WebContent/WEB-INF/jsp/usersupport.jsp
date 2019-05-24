@@ -24,17 +24,28 @@
 					<div class="card-body">
 						<h5 class="card-title">お問い合わせ</h5>
 						<br>
-						<form action="UserSupportConfirm">
-						<div class="form-group">
-							<label for="formGroupExampleInput">題名</label>
-							<input type="text" class="form-control" id="formGroupExampleInput" placeholder="題名">
-						</div>
-						<div class="form-group">
-							<label for="exampleFormControlTextarea1">内容</label>
-							<textarea class="form-control" id="exampleFormControlTextarea1" rows="5"></textarea>
-						</div>
-						<br>
-						<button type="submit" class="btn btn-primary">登録する</button>
+						<form action="UserSupportConfirm" method="post">
+							<div class="form-group">
+								<label for="inputItemName">部品名</label>
+								<select class="custom-select">
+									<c:forEach var="item" items="${itemList}">
+									<option id="itemId" value="${item.itemId}" >${item.itemName}</option>
+									</c:forEach>
+								</select>
+								<label for="inputItemName">顧客名</label>
+								<select class="custom-select" name="customerId">
+									<c:forEach var="customer" items="${customerList}">
+									<option id="customerId" value="${customer.customerId}" >${customer.customerName}</option>
+									</c:forEach>
+								</select>
+							</div>
+							<br>
+							<div class="form-group">
+								<label for="exampleFormControlTextarea1">お問い合わせ内容</label>
+								<textarea class="form-control" name="inquiryContents" rows="5" required></textarea>
+							</div>
+							<br>
+							<button type="submit" class="btn btn-primary">登録する</button>
 						</form>
 					</div>
 				</div>
