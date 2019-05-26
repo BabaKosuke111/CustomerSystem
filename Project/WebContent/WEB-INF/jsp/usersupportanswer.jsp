@@ -9,7 +9,7 @@
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
 	integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
 	crossorigin="anonymous">
-<title>ホーム</title>
+<title>お問い合わせ回答画面</title>
 </head>
 <body>
 	<jsp:include page="/baselayout/navbar.jsp" />
@@ -24,17 +24,26 @@
 					<div class="card-body">
 						<h5 class="card-title">お問い合わせ回答</h5>
 						<br>
-						<form action="UserSupportAnswerConfirm">
+						<form action="UserSupportAnswerConfirm" method="post">
 						<div class="form-group">
-							<label for="formGroupExampleInput">シャドバが糞ゲーについて</label>
-							<input type="text" class="form-control" id="formGroupExampleInput" placeholder="題名" readonly>
+							<label for="formGroupExampleInput">部品名</label>
+							<input type="text" class="form-control" placeholder="${inquiry.itemName}" readonly>
+						</div>
+						<div class="form-group">
+							<label for="formGroupExampleInput">顧客名</label>
+							<input type="text" class="form-control" placeholder="${inquiry.customerName}" readonly>
+						</div>
+						<div class="form-group">
+							<label for="exampleFormControlTextarea1">お問い合わせ</label>
+							<textarea class="form-control" placeholder="${inquiry.inquiryContents}" rows="5" readonly></textarea>
 						</div>
 						<div class="form-group">
 							<label for="exampleFormControlTextarea1">回答</label>
-							<textarea class="form-control" id="exampleFormControlTextarea1" rows="5"></textarea>
+							<textarea class="form-control" name="replyContents" rows="5" required></textarea>
 						</div>
 						<br>
-						<button type="submit" class="btn btn-primary">登録する</button>
+						<input type="hidden" name="inquiryId" value="${inquiry.inquiryId}">
+						<button type="submit" class="btn btn-primary">回答する</button>
 						</form>
 					</div>
 				</div>
@@ -42,5 +51,7 @@
 			<div class="col"></div>
 		</div>
 	</div>
+	<br>
+	<br>
 </body>
 </html>

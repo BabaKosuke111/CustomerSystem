@@ -10,6 +10,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import beans.Inquiry;
+import dao.InquiryDAO;
+
 /**
  * Servlet implementation class UserSupportAnswerConfirm
  */
@@ -30,17 +33,36 @@ public class UserSupportAnswerConfirm extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		HttpSession session = request.getSession();
+		response.getWriter().append("Served at: ").append(request.getContextPath());
 
-		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/usersupportanswerconfirm.jsp");
-		dispatcher.forward(request, response);	}
+		}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		doGet(request, response);
-	}
+		request.setCharacterEncoding("UTF-8");
+		HttpSession session = request.getSession();
+		try {
+			int inquriyId=Integer.parseInt(request.getParameter("inquiryId"));
+			String replyContents=request.getParameter("replyContents");
 
+			Inquiry inquiry=new Inquiry();
+			inquiry.setInquiryId(inquriyId);
+			inquiry.setReplyContents(replyContents);
+
+			InquiryDAO inquirydao=new InquiryDAO();
+			int count=inquirydao.updateInquiry(inquiry);
+
+			request.setAttribute("count", count);
+
+			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/usersupportanswerconfirm.jsp");
+			dispatcher.forward(request, response);
+		} catch (Exception e) {
+			e.printStackTrace();
+			session.setAttribute("errorMessage", e.toString());
+			response.sendRedirect("Error");
+		}
+	}
 }

@@ -56,7 +56,25 @@ public class UserSupportList extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		doGet(request, response);
+		request.setCharacterEncoding("UTF-8");
+		HttpSession session = request.getSession();
+		try {
+			String itemName=request.getParameter("itemName");
+			String customerName=request.getParameter("customerName");
+
+			InquiryDAO inquirydao=new InquiryDAO();
+			List<Inquiry> inquiryList=inquirydao.searchInquiry(itemName, customerName);
+
+			request.setAttribute("inquiryList", inquiryList);
+
+			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/usersupportlist.jsp");
+			dispatcher.forward(request, response);
+		} catch (Exception e) {
+			e.printStackTrace();
+			session.setAttribute("errorMessage", e.toString());
+			response.sendRedirect("Error");
+		}
+
 	}
 
 }

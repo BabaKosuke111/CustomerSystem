@@ -9,7 +9,7 @@
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
 	integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
 	crossorigin="anonymous">
-<title>ホーム</title>
+<title>お問い合わせ登録画面</title>
 </head>
 <body>
 	<jsp:include page="/baselayout/navbar.jsp" />
@@ -27,15 +27,15 @@
 						<form action="UserSupportConfirm" method="post">
 							<div class="form-group">
 								<label for="inputItemName">部品名</label>
-								<select class="custom-select">
+								<select class="custom-select" name="itemId">
 									<c:forEach var="item" items="${itemList}">
-									<option id="itemId" value="${item.itemId}" >${item.itemName}</option>
+									<option value="${item.itemId}" >${item.itemName}</option>
 									</c:forEach>
 								</select>
 								<label for="inputItemName">顧客名</label>
 								<select class="custom-select" name="customerId">
 									<c:forEach var="customer" items="${customerList}">
-									<option id="customerId" value="${customer.customerId}" >${customer.customerName}</option>
+									<option value="${customer.customerId}">${customer.customerName}</option>
 									</c:forEach>
 								</select>
 							</div>

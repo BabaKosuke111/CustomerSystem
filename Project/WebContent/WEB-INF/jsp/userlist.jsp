@@ -9,7 +9,7 @@
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
 	integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
 	crossorigin="anonymous">
-<title>ホーム</title>
+<title>ユーザ一覧</title>
 </head>
 <body>
 	<jsp:include page="/baselayout/navbar.jsp" />
@@ -27,9 +27,8 @@
 			<c:forEach var="customer" items="${customerList}">
 				<tr>
 					<td>${customer.customerName}</td>
-					<td><a class="btn btn-primary"
-						href="UserUpdate?customerId=${customer.customerId}" role="button">編集</a></td>
-					<td><a class="btn btn-primary" href="UserDelete?customerId=${customer.customerId}" role="button">削除</a></td>
+					<td><a class="btn btn-primary" href="UserUpdate?customerId=${customer.customerId}" role="button">編集</a></td>
+					<td><a class="btn btn-danger" href="UserDelete?customerId=${customer.customerId}" role="button">削除</a></td>
 				</tr>
 			</c:forEach>
 		</tbody>

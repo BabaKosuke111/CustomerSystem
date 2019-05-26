@@ -2,7 +2,6 @@ package customerservice;
 
 import java.io.IOException;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -10,23 +9,22 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import beans.Inquiry;
 import dao.InquiryDAO;
 
 /**
- * Servlet implementation class UserSupportAnswer
+ * Servlet implementation class UserSupportDelete
  */
-@WebServlet("/UserSupportAnswer")
-public class UserSupportAnswer extends HttpServlet {
+@WebServlet("/UserSupportDelete")
+public class UserSupportDelete extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	/**
-	 * @see HttpServlet#HttpServlet()
-	 */
-	public UserSupportAnswer() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
+    /**
+     * @see HttpServlet#HttpServlet()
+     */
+    public UserSupportDelete() {
+        super();
+        // TODO Auto-generated constructor stub
+    }
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
@@ -39,16 +37,17 @@ public class UserSupportAnswer extends HttpServlet {
 			int inquiryId=Integer.parseInt(request.getParameter("inquiryId"));
 
 			InquiryDAO inquirydao=new InquiryDAO();
-			Inquiry inquiry=inquirydao.showCustomer(inquiryId);
+			int count=inquirydao.deleteInquiry(inquiryId);
 
-			request.setAttribute("inquiry", inquiry);
+			request.setAttribute("count", count);
 
-			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/usersupportanswer.jsp");
-			dispatcher.forward(request, response);
+			response.sendRedirect("UserSupportList");
+
 		} catch (Exception e) {
 			e.printStackTrace();
 			session.setAttribute("errorMessage", e.toString());
 			response.sendRedirect("Error");
+
 		}
 	}
 

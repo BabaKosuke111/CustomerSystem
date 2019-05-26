@@ -9,7 +9,7 @@
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
 	integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
 	crossorigin="anonymous">
-<title>ホーム</title>
+<title>お問い合わせ登録確認画面</title>
 </head>
 <body>
 	<jsp:include page="/baselayout/navbar.jsp" />
@@ -23,8 +23,8 @@
 				<div class="card" style="width: 25rem;">
 					<div class="card-body">
 						<h4 class="card-title">お問い合わせ</h4>
-						<h5 class="card-title">登録しました</h5>
-						<a class="btn btn-primary" href="UserList" role="button">ユーザリストへ</a>
+						<h5 class="card-title">お問い合わせを登録しました</h5>
+						<a class="btn btn-primary" href="UserSupportList" role="button">お問い合わせ一覧へ</a>
 					</div>
 				</div>
 			</div>
